@@ -1,64 +1,22 @@
-// App.js
 import React from "react";
-import styled from "styled-components";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./componentes/Header";
-import Card from "./componentes/Card";
 import Footer from "./componentes/Footer";
-import logo from "./images/comida.jpg";
-
-const MainSection = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 20px;
-  background-color: #fff8f2;
-`;
+import HomePage from "./componentes/Home";
+import RestaurantDetailsPage from "./componentes/Restaurant";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <MainSection>
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        <Card
-          image={logo}
-          restaurantName="Irasshai Japanase Food"
-          description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!"
-          rating="★★★★☆"
-        />
-        {/* Adicione mais cards aqui */}
-      </MainSection>
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <Header />
+        <Routes>
+          <Route path="/detalhes" element={<RestaurantDetailsPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

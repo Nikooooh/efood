@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const CardContainer = styled.div`
   position: relative;
@@ -61,6 +62,11 @@ const Classificacao = styled.h4`
 `;
 
 const Card = ({ image, restaurantName, description }) => {
+  const navigate = useNavigate();
+
+  const handleMoreInfoClick = () => {
+    navigate("/detalhes");
+  };
   return (
     <CardContainer>
       <CardImage src={image} alt="Imagem do restaurante" />
@@ -71,7 +77,7 @@ const Card = ({ image, restaurantName, description }) => {
         <Rating>★</Rating>
       </RestaurantName>
       <Description>{description}</Description>
-      <Button>Saiba mais</Button>
+      <Button onClick={handleMoreInfoClick}>Saiba mais</Button>
     </CardContainer>
   );
 };
