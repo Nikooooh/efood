@@ -32,8 +32,8 @@ const Description = styled.p`
 `;
 const FoodType = styled.div`
   position: absolute; /* Define o posicionamento absoluto */
-  top: 55px; /* Distância do topo */
-  right: 55px; /* Distância da direita */
+  top: 36px; /* Distância do topo */
+  right: 31px; /* Distância da direita */
   background-color: #e66767; /* Cor do retângulo */
   color: white; /* Cor do texto */
   padding: 8px 10px; /* Espaçamento interno */
