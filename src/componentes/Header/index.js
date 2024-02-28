@@ -1,10 +1,10 @@
 // components/Header.js
 import React from "react";
 import styled from "styled-components";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo2.png";
 
 const HeaderContainer = styled.header`
-  background-color: #f7dad9;
+  background-color: #ffebcd;
   padding: 100px;
   display: flex;
   flex-direction: column; /* Alterado para colocar os elementos em coluna */
@@ -13,19 +13,28 @@ const HeaderContainer = styled.header`
 `;
 
 const Logo = styled.img`
-  width: 100px;
+  width: 200px;
   height: auto;
 `;
 
 const Text = styled.span`
-  color: #000;
+  color: #e66767;
+  font-weight: bold;
+  font-size: 29px;
+  margin-top: 50px;
+`;
+const Text2 = styled.span`
+  color: #e66767;
+  font-weight: bold;
+  font-size: 29px;
 `;
 
 const Header = () => {
   return (
     <HeaderContainer>
       <Logo src={logo} alt="Logo" />
-      <Text>Seu Texto Aqui</Text>
+      <Text>Viva experiências gastronômicas </Text>
+      <Text2>no conforto da sua casa</Text2>
     </HeaderContainer>
   );
 };
