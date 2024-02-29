@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaTrash } from "react-icons/fa";
 
@@ -93,6 +93,7 @@ const ContinueButton = styled.button`
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;
+  margin-right: 9px;
   font-family: Arial, sans-serif;
   font-size: 16px;
 
@@ -101,31 +102,177 @@ const ContinueButton = styled.button`
   }
 `;
 
+const DeliveryForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
+const DeliveryInput = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const DeliveryButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+`;
+
 const Cart = ({ items, onClose, removeFromCart }) => {
   const totalPrice = items.reduce((total, item) => total + item.preco, 0);
+  const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+  const [formData, setFormData] = useState({
+    nome: "",
+    endereco: "",
+    cidade: "",
+    cep: "",
+    numero: "",
+  });
+  const [formErrors, setFormErrors] = useState({});
+
+  const handleContinueToDelivery = () => {
+    setShowDeliveryForm(true);
+  };
+
+  const handleBackToCart = () => {
+    setShowDeliveryForm(false);
+  };
+
+  const handleContinueToPayment = () => {
+    console.log("Continuar com o pagamento");
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const validateForm = () => {
+    let errors = {};
+    if (!formData.nome) {
+      errors.nome = "O nome é obrigatório";
+    }
+    if (!formData.endereco) {
+      errors.endereco = "O endereço é obrigatório";
+    }
+    if (!formData.cidade) {
+      errors.cidade = "A cidade é obrigatória";
+    }
+    if (!formData.cep) {
+      errors.cep = "O CEP é obrigatório";
+    }
+    if (!formData.numero) {
+      errors.numero = "O número é obrigatório";
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      handleContinueToPayment();
+    }
+  };
 
   return (
     <CartContainer>
       <CloseButton onClick={onClose}>X</CloseButton>
-      <Title>Carrinho de Compras</Title>
-      {items.map((item, index) => (
-        <ItemContainer key={index}>
-          <Item>
-            <ItemImage src={item.foto} alt={item.nome} />
-            <ItemDetails>
-              <ItemName>{item.nome}</ItemName>
-              <ItemPrice>Preço: R$ {item.preco.toFixed(2)}</ItemPrice>
-            </ItemDetails>
-            <RemoveItemButton onClick={() => removeFromCart(index)}>
-              <FaTrash color="#ff5733" />
-            </RemoveItemButton>
-          </Item>
-        </ItemContainer>
-      ))}
-      <Total>
-        Total: R$ {totalPrice.toFixed(2)}
-        <ContinueButton>Continuar com a entrega</ContinueButton>
-      </Total>
+      <Title>
+        {showDeliveryForm ? "Informações de Entrega" : "Carrinho de Compras"}
+      </Title>
+      {showDeliveryForm ? (
+        <DeliveryForm onSubmit={handleSubmit}>
+          <DeliveryInput
+            type="text"
+            name="nome"
+            placeholder="Nome"
+            value={formData.nome}
+            onChange={handleInputChange}
+          />
+          {formErrors.nome && <ErrorMessage>{formErrors.nome}</ErrorMessage>}
+          <DeliveryInput
+            type="text"
+            name="endereco"
+            placeholder="Endereço"
+            value={formData.endereco}
+            onChange={handleInputChange}
+          />
+          {formErrors.endereco && (
+            <ErrorMessage>{formErrors.endereco}</ErrorMessage>
+          )}
+          <DeliveryInput
+            type="text"
+            name="cidade"
+            placeholder="Cidade"
+            value={formData.cidade}
+            onChange={handleInputChange}
+          />
+          {formErrors.cidade && (
+            <ErrorMessage>{formErrors.cidade}</ErrorMessage>
+          )}
+          <DeliveryInput
+            type="text"
+            name="cep"
+            placeholder="CEP"
+            value={formData.cep}
+            onChange={handleInputChange}
+          />
+          {formErrors.cep && <ErrorMessage>{formErrors.cep}</ErrorMessage>}
+          <DeliveryInput
+            type="text"
+            name="numero"
+            placeholder="Número"
+            value={formData.numero}
+            onChange={handleInputChange}
+          />
+          {formErrors.numero && (
+            <ErrorMessage>{formErrors.numero}</ErrorMessage>
+          )}
+          <DeliveryButtonContainer>
+            <ContinueButton onClick={handleBackToCart}>
+              Voltar para o carrinho
+            </ContinueButton>
+            <ContinueButton type="submit">
+              Continuar com o pagamento
+            </ContinueButton>
+          </DeliveryButtonContainer>
+        </DeliveryForm>
+      ) : (
+        <>
+          {items.map((item, index) => (
+            <ItemContainer key={index}>
+              <Item>
+                <ItemImage src={item.foto} alt={item.nome} />
+                <ItemDetails>
+                  <ItemName>{item.nome}</ItemName>
+                  <ItemPrice>Preço: R$ {item.preco.toFixed(2)}</ItemPrice>
+                </ItemDetails>
+                <RemoveItemButton onClick={() => removeFromCart(index)}>
+                  <FaTrash color="#ff5733" />
+                </RemoveItemButton>
+              </Item>
+            </ItemContainer>
+          ))}
+          <Total>
+            Total: R$ {totalPrice.toFixed(2)}
+            <ContinueButton onClick={handleContinueToDelivery}>
+              Continuar com a entrega
+            </ContinueButton>
+          </Total>
+        </>
+      )}
     </CartContainer>
   );
 };
