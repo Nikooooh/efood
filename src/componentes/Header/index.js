@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../../images/logo2.png";
+import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   padding: 100px;
@@ -32,7 +33,9 @@ const Text2 = styled.span`
 const Header = () => {
   return (
     <HeaderContainer>
-      <Logo src={logo} alt="Logo" />
+      <Link to={"/"}>
+        <Logo src={logo} alt="Logo" />{" "}
+      </Link>
       <Text>Viva experiências gastronômicas </Text>
       <Text2>no conforto da sua casa</Text2>
     </HeaderContainer>

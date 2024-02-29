@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Cart from "../Cart";
 
 const MenuItemCard = styled.div`
   border-radius: 10px;
@@ -109,6 +110,8 @@ const RestaurantDetailsPage = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
@@ -119,8 +122,12 @@ const RestaurantDetailsPage = () => {
       });
   }, [id]);
 
-  const addToCart = (item) => {
-    alert(`Adicionando ${item.nome} ao carrinho`);
+  const openCart = () => {
+    setCartOpen(true);
+  };
+
+  const closeCart = () => {
+    setCartOpen(false);
   };
 
   const openModal = (item) => {
@@ -129,6 +136,18 @@ const RestaurantDetailsPage = () => {
 
   const closeModal = () => {
     setSelectedItem(null);
+  };
+
+  const addToCart = () => {
+    setCartItems([...cartItems, selectedItem]);
+    setCartOpen(true);
+    closeModal();
+  };
+
+  const removeFromCart = (index) => {
+    const newCartItems = [...cartItems];
+    newCartItems.splice(index, 1);
+    setCartItems(newCartItems);
   };
 
   return (
@@ -161,12 +180,19 @@ const RestaurantDetailsPage = () => {
               <ItemDescription>{selectedItem.descricao}</ItemDescription>
               <ItemPrice>Preço: R$ {selectedItem.preco.toFixed(2)}</ItemPrice>
               <ItemPrice>Serve: {selectedItem.porcao}</ItemPrice>
-              <AddToCartButton onClick={() => addToCart(selectedItem)}>
+              <AddToCartButton onClick={addToCart}>
                 Adicionar ao Carrinho
               </AddToCartButton>
             </div>
           </ModalContent>
         </Modal>
+      )}
+      {cartOpen && (
+        <Cart
+          items={cartItems}
+          onClose={closeCart}
+          removeFromCart={removeFromCart}
+        />
       )}
     </div>
   );
