@@ -102,6 +102,12 @@ const ContinueButton = styled.button`
   }
 `;
 
+const PaymentForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
 const DeliveryForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -120,6 +126,23 @@ const DeliveryButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
+const PaymentInput = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const PaymentButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PaymentTotal = styled.div`
+  font-size: 16px;
+  margin-bottom: 10px;
+`;
+
 const ErrorMessage = styled.span`
   color: red;
   font-size: 12px;
@@ -129,6 +152,7 @@ const ErrorMessage = styled.span`
 const Cart = ({ items, onClose, removeFromCart }) => {
   const totalPrice = items.reduce((total, item) => total + item.preco, 0);
   const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
     endereco: "",
@@ -136,7 +160,14 @@ const Cart = ({ items, onClose, removeFromCart }) => {
     cep: "",
     numero: "",
   });
+  const [cardData, setCardData] = useState({
+    cardNumber: "",
+    cardName: "",
+    expirationDate: "",
+    cvv: "",
+  });
   const [formErrors, setFormErrors] = useState({});
+  const [cardFormErrors, setCardFormErrors] = useState({});
 
   const handleContinueToDelivery = () => {
     setShowDeliveryForm(true);
@@ -144,21 +175,23 @@ const Cart = ({ items, onClose, removeFromCart }) => {
 
   const handleBackToCart = () => {
     setShowDeliveryForm(false);
+    setShowPaymentForm(false);
   };
 
   const handleContinueToPayment = () => {
-    console.log("Continuar com o pagamento");
+    setShowDeliveryForm(false);
+    setShowPaymentForm(true);
   };
 
-  const handleInputChange = (e) => {
+  const handleCardInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setCardData({
+      ...cardData,
       [name]: value,
     });
   };
 
-  const validateForm = () => {
+  const validateDeliveryForm = () => {
     let errors = {};
     if (!formData.nome) {
       errors.nome = "O nome é obrigatório";
@@ -179,21 +212,108 @@ const Cart = ({ items, onClose, removeFromCart }) => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const validatePaymentForm = () => {
+    let errors = {};
+    if (!cardData.cardNumber) {
+      errors.cardNumber = "O número do cartão é obrigatório";
+    }
+    if (!cardData.cardName) {
+      errors.cardName = "O nome no cartão é obrigatório";
+    }
+    if (!cardData.expirationDate) {
+      errors.expirationDate = "A data de validade é obrigatória";
+    }
+    if (!cardData.cvv) {
+      errors.cvv = "O CVV é obrigatório";
+    }
+    setCardFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmitDelivery = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateDeliveryForm()) {
       handleContinueToPayment();
     }
+  };
+
+  const handleSubmitPayment = (e) => {
+    e.preventDefault();
+    if (validatePaymentForm()) {
+      console.log("Pedido Concluído!");
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
     <CartContainer>
       <CloseButton onClick={onClose}>X</CloseButton>
       <Title>
-        {showDeliveryForm ? "Informações de Entrega" : "Carrinho de Compras"}
+        {showDeliveryForm || showPaymentForm
+          ? showPaymentForm
+            ? "Informações de Pagamento"
+            : "Informações de Entrega"
+          : "Carrinho de Compras"}
       </Title>
-      {showDeliveryForm ? (
-        <DeliveryForm onSubmit={handleSubmit}>
+      {showPaymentForm ? (
+        <PaymentForm onSubmit={handleSubmitPayment}>
+          <PaymentTotal>Total: R$ {totalPrice.toFixed(2)}</PaymentTotal>
+          <PaymentInput
+            type="text"
+            name="cardNumber"
+            placeholder="Número do Cartão"
+            value={cardData.cardNumber}
+            onChange={handleCardInputChange}
+          />
+          {cardFormErrors.cardNumber && (
+            <ErrorMessage>{cardFormErrors.cardNumber}</ErrorMessage>
+          )}
+          <PaymentInput
+            type="text"
+            name="cardName"
+            placeholder="Nome no Cartão"
+            value={cardData.cardName}
+            onChange={handleCardInputChange}
+          />
+          {cardFormErrors.cardName && (
+            <ErrorMessage>{cardFormErrors.cardName}</ErrorMessage>
+          )}
+          <PaymentInput
+            type="text"
+            name="expirationDate"
+            placeholder="Data de Validade"
+            value={cardData.expirationDate}
+            onChange={handleCardInputChange}
+          />
+          {cardFormErrors.expirationDate && (
+            <ErrorMessage>{cardFormErrors.expirationDate}</ErrorMessage>
+          )}
+          <PaymentInput
+            type="text"
+            name="cvv"
+            placeholder="CVV"
+            value={cardData.cvv}
+            onChange={handleCardInputChange}
+          />
+          {cardFormErrors.cvv && (
+            <ErrorMessage>{cardFormErrors.cvv}</ErrorMessage>
+          )}
+          <PaymentButtonContainer>
+            <ContinueButton onClick={handleBackToCart}>
+              Voltar para o carrinho
+            </ContinueButton>
+            <ContinueButton type="submit">Concluir Pedido</ContinueButton>
+          </PaymentButtonContainer>
+        </PaymentForm>
+      ) : showDeliveryForm ? (
+        <DeliveryForm onSubmit={handleSubmitDelivery}>
           <DeliveryInput
             type="text"
             name="nome"
@@ -244,7 +364,7 @@ const Cart = ({ items, onClose, removeFromCart }) => {
             <ContinueButton onClick={handleBackToCart}>
               Voltar para o carrinho
             </ContinueButton>
-            <ContinueButton type="submit">
+            <ContinueButton onClick={handleContinueToPayment}>
               Continuar com o pagamento
             </ContinueButton>
           </DeliveryButtonContainer>
