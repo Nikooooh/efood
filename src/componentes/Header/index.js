@@ -9,6 +9,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   background-image: linear-gradient(to bottom, #ffebcd, #ffac8c);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const Logo = styled.img`

@@ -30,7 +30,7 @@ function Home() {
             restaurantName={restaurant.titulo}
             description={restaurant.descricao}
             rating={` ${restaurant.avaliacao}`}
-            foodType={restaurant.tipo}
+            foodType={restaurant.tipo.toUpperCase()}
           />
         ))}
       </MainSection>

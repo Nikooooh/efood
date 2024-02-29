@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const CardContainer = styled.div`
   position: relative;
   background-color: #fff;
-  width: 600px; /* Dobrado o tamanho do card */
-  height: 800px; /* Dobrado o tamanho do card */
+  width: 600px;
+  height: 800px;
   margin-bottom: 20px;
   margin-top: 59px;
   padding: 12px;
@@ -19,7 +19,7 @@ const CardContainer = styled.div`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 400px; /* Dobrado o tamanho da imagem */
+  height: 400px;
   object-fit: cover;
   border-radius: 5px;
 `;
