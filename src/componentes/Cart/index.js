@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CartContainer = styled.div`
   position: fixed;
@@ -127,6 +128,7 @@ const ErrorMessage = styled.span`
 `;
 
 const Cart = ({ items, onClose, removeFromCart }) => {
+  const navigate = useNavigate();
   const totalPrice = items.reduce((total, item) => total + item.preco, 0);
   const [showDeliveryForm, setShowDeliveryForm] = useState(false);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -146,6 +148,21 @@ const Cart = ({ items, onClose, removeFromCart }) => {
   });
   const [cardFormErrors, setCardFormErrors] = useState({});
 
+  useEffect(() => {
+    fetch("https://fake-api-tau.vercel.app/api/efood/checkout")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erro na solicitação: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Dados da API de checkout:", data);
+      })
+      .catch((error) => {
+        console.error("Erro ao obter os dados da API de checkout:", error);
+      });
+  }, []);
   const handleContinueToDelivery = () => {
     setShowDeliveryForm(true);
     setShowPaymentForm(false);
@@ -175,6 +192,20 @@ const Cart = ({ items, onClose, removeFromCart }) => {
       ...cardData,
       [name]: value,
     });
+  };
+
+  const handleSubmitDelivery = (e) => {
+    e.preventDefault();
+    if (validateDeliveryForm()) {
+      handleContinueToPayment();
+    }
+  };
+
+  const handleSubmitPayment = (e) => {
+    e.preventDefault();
+    if (validatePaymentForm()) {
+      handleFinishOrder();
+    }
   };
 
   const validateDeliveryForm = () => {
@@ -222,18 +253,60 @@ const Cart = ({ items, onClose, removeFromCart }) => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmitDelivery = (e) => {
-    e.preventDefault();
-    if (validateDeliveryForm()) {
-      handleContinueToPayment();
+  const handleFinishOrder = () => {
+    if (!items || items.length === 0) {
+      console.error("O carrinho está vazio.");
+      return;
     }
-  };
 
-  const handleSubmitPayment = (e) => {
-    e.preventDefault();
-    if (validatePaymentForm()) {
-      console.log("Pedido Concluído!");
-    }
+    const orderData = {
+      products: items.map((item) => ({
+        id: item.id,
+        nome: item.nome,
+        price: item.preco,
+      })),
+      delivery: {
+        receiver: formData.nome,
+        address: {
+          description: formData.endereco,
+          city: formData.cidade,
+          zipCode: formData.cep,
+          number: formData.numero,
+          complement: "",
+        },
+      },
+      payment: {
+        card: {
+          name: cardData.cardName,
+          number: cardData.cardNumber,
+          code: cardData.cvv,
+          expires: {
+            month: cardData.expirationDate.split("/")[0],
+            year: cardData.expirationDate.split("/")[1],
+          },
+        },
+      },
+    };
+
+    fetch("https://fake-api-tau.vercel.app/api/efood/checkout", {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erro na solicitação: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        navigate("/confirmacao", { state: { orderId: data.orderId } });
+      })
+      .catch((error) => {
+        console.error("Erro ao concluir o pedido:", error);
+      });
   };
 
   return (
