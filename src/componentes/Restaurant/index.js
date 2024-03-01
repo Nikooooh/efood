@@ -116,6 +116,8 @@ const MenuContainer = styled.div`
 
 const ImageContainer = styled.div`
   width: 100%;
+  position: relative;
+  z-index: 0;
 `;
 
 const RestaurantDetailsPage = () => {
@@ -167,11 +169,13 @@ const RestaurantDetailsPage = () => {
 
   return (
     <div>
-      <Header2 />
+      <Header2 style={{ zIndex: 1 }} />
       <ImageContainer>
-        <RestaurantImage imageUrl={restaurantImage} />{" "}
+        <RestaurantImage
+          imageUrl={restaurantImage}
+          restaurantName={restaurantName}
+        />{" "}
       </ImageContainer>
-
       <MenuContainer>
         {menuItems.map((item) => (
           <MenuItemCard key={item.id}>

@@ -4,11 +4,9 @@ import Logo2 from "../../images/logo.png";
 import BackgroundImage from "../../images/Vector.png";
 
 const HeaderContainer = styled.div`
-  position: absolute;
   width: 100%;
   height: 186px;
   display: flex;
-  margin-top: -20px;
   justify-content: space-evenly;
   align-items: center;
   background-image: url(${BackgroundImage});
@@ -20,7 +18,6 @@ const HeaderContainer = styled.div`
 const Logo = styled.img`
   width: 125px;
   height: 57.5px;
-  margin-left: 52px;
 `;
 
 const Title = styled.div`
