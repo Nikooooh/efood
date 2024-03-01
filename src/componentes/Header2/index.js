@@ -23,7 +23,7 @@ const Logo = styled.img`
 `;
 
 const Title = styled.div`
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 18px;
@@ -32,7 +32,7 @@ const Title = styled.div`
 `;
 
 const CartInfo = styled.div`
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 18px;
