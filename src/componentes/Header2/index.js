@@ -8,6 +8,7 @@ const HeaderContainer = styled.div`
   width: 100%; /* Usar toda a largura da tela */
   height: 186px;
   display: flex;
+  margin-top: -20px;
   justify-content: space-evenly; /* Distribuir os elementos uniformemente */
   align-items: center; /* Centralizar verticalmente */
   background-image: url(${BackgroundImage}); /* Use a imagem de fundo aqui */

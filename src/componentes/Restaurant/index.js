@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Cart from "../Cart";
 import Header2 from "../Header2";
+import RestaurantImage from "./restaruranteImage"; // Importe o componente RestaurantImage
 
 const MenuItemCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -12,7 +13,7 @@ const MenuItemCard = styled.div`
   background-color: #e66767;
   height: 428px;
   border: 10px solid #e66767;
-  margin: 290px 101px 150px;
+  margin: 50px 19px; /* Ajuste conforme necessário */
 
   &:hover {
     transform: translateY(-5px);
@@ -109,16 +110,17 @@ const RestaurantName = styled.h1`
 const MenuContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   background-color: #fff8f2;
 `;
 
 const ImageContainer = styled.div`
-  margin-right: 20px;
-  margin-top: 30px;
+  width: 100%;
 `;
 
 const RestaurantDetailsPage = () => {
   const { id } = useParams();
+  const [restaurantImage, setRestaurantImage] = useState(""); // Estado para armazenar a URL da imagem do restaurante
   const [menuItems, setMenuItems] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -131,6 +133,7 @@ const RestaurantDetailsPage = () => {
       .then((data) => {
         setMenuItems(data.cardapio);
         setRestaurantName(data.titulo);
+        setRestaurantImage(data.capa); // Define a URL da imagem do restaurante
       });
   }, [id]);
 
@@ -165,6 +168,11 @@ const RestaurantDetailsPage = () => {
   return (
     <div>
       <Header2 />
+      <ImageContainer>
+        <RestaurantImage imageUrl={restaurantImage} />{" "}
+        {/* Exibe a imagem do restaurante */}
+      </ImageContainer>
+
       <MenuContainer>
         {menuItems.map((item) => (
           <MenuItemCard key={item.id}>
