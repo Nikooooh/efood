@@ -18,6 +18,7 @@ const HeaderContainer = styled.div`
 const Logo = styled.img`
   width: 125px;
   height: 57.5px;
+  margin-left: 103px;
 `;
 
 const Title = styled.div`
