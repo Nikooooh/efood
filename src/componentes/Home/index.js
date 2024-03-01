@@ -5,15 +5,15 @@ import Card from "../Card";
 const MainSection = styled.section`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Alinha os cards na esquerda e na direita */
+  justify-content: space-between;
   padding: 20px;
   background-color: #fff8f2;
-  max-width: 1200px; /* Largura máxima para manter a largura dos cards */
-  margin: 0 auto; /* Centraliza a seção */
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const MainContainer = styled.div`
-  background-color: #fff8f2; /* Cor de fundo para a página inteira */
+  background-color: #fff8f2;
 `;
 
 function Home() {

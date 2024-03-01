@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Cart from "../Cart";
+import Header2 from "../Header2";
 
 const MenuItemCard = styled.div`
-  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
-  width: 27%;
-  margin: 0 15px 30px;
+  width: 23%;
+  background-color: #e66767;
+  height: 428px;
+  border: 10px solid #e66767;
+  margin: 290px 101px 150px;
+
   &:hover {
     transform: translateY(-5px);
   }
@@ -17,7 +21,7 @@ const MenuItemCard = styled.div`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
 `;
 
@@ -28,30 +32,38 @@ const CardContent = styled.div`
 const ItemTitle = styled.h3`
   font-size: 20px;
   margin-bottom: 8px;
+  color: #ffebd9;
+  margin-top: -14px;
+  margin-left: -14px;
 `;
 
 const ItemDescription = styled.p`
-  font-size: 16px;
+  font-size: 13.5px;
   margin-bottom: 16px;
+  color: #ffebd9;
+  margin-left: -14px;
 `;
 
 const ItemPrice = styled.p`
   font-size: 16px;
+  color: #ffebd9;
   margin-bottom: 16px;
 `;
 
 const AddToCartButton = styled.button`
-  background-color: #ff5733;
-  color: #fff;
+  background-color: #ffebd9;
+  color: #e66767;
+  font-weight: 700;
+  font-size: 14px;
+  width: 109%;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  margin-left: -15px;
+  margin-top: -20px;
+  line-height: 16.41px;
   border: none;
-  border-radius: 4px;
   padding: 8px 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #ff714d;
-  }
 `;
 
 const Modal = styled.div`
@@ -97,7 +109,7 @@ const RestaurantName = styled.h1`
 const MenuContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  background-color: #fff8f2;
 `;
 
 const ImageContainer = styled.div`
@@ -152,7 +164,7 @@ const RestaurantDetailsPage = () => {
 
   return (
     <div>
-      <RestaurantName>{restaurantName}</RestaurantName>
+      <Header2 />
       <MenuContainer>
         {menuItems.map((item) => (
           <MenuItemCard key={item.id}>
@@ -160,9 +172,8 @@ const RestaurantDetailsPage = () => {
             <CardContent>
               <ItemTitle>{item.nome}</ItemTitle>
               <ItemDescription>{item.descricao}</ItemDescription>
-              <ItemPrice>Preço: R$ {item.preco.toFixed(2)}</ItemPrice>
               <AddToCartButton onClick={() => openModal(item)}>
-                Mais Detalhes
+                Adicionar ao Carrinho
               </AddToCartButton>
             </CardContent>
           </MenuItemCard>
