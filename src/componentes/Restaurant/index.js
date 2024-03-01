@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Cart from "../Cart";
 import Header2 from "../Header2";
-import RestaurantImage from "./restaruranteImage"; // Importe o componente RestaurantImage
+import RestaurantImage from "./restaruranteImage";
 
 const MenuItemCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -13,7 +13,7 @@ const MenuItemCard = styled.div`
   background-color: #e66767;
   height: 428px;
   border: 10px solid #e66767;
-  margin: 50px 19px; /* Ajuste conforme necessário */
+  margin: 50px 19px;
 
   &:hover {
     transform: translateY(-5px);
@@ -120,7 +120,7 @@ const ImageContainer = styled.div`
 
 const RestaurantDetailsPage = () => {
   const { id } = useParams();
-  const [restaurantImage, setRestaurantImage] = useState(""); // Estado para armazenar a URL da imagem do restaurante
+  const [restaurantImage, setRestaurantImage] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -133,7 +133,7 @@ const RestaurantDetailsPage = () => {
       .then((data) => {
         setMenuItems(data.cardapio);
         setRestaurantName(data.titulo);
-        setRestaurantImage(data.capa); // Define a URL da imagem do restaurante
+        setRestaurantImage(data.capa);
       });
   }, [id]);
 
@@ -170,7 +170,6 @@ const RestaurantDetailsPage = () => {
       <Header2 />
       <ImageContainer>
         <RestaurantImage imageUrl={restaurantImage} />{" "}
-        {/* Exibe a imagem do restaurante */}
       </ImageContainer>
 
       <MenuContainer>

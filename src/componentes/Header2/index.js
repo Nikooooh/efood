@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import Logo2 from "../../images/logo.png";
-import BackgroundImage from "../../images/Vector.png"; // Importe a imagem de fundo aqui
+import BackgroundImage from "../../images/Vector.png";
 
 const HeaderContainer = styled.div`
   position: absolute;
-  width: 100%; /* Usar toda a largura da tela */
+  width: 100%;
   height: 186px;
   display: flex;
   margin-top: -20px;
-  justify-content: space-evenly; /* Distribuir os elementos uniformemente */
-  align-items: center; /* Centralizar verticalmente */
-  background-image: url(${BackgroundImage}); /* Use a imagem de fundo aqui */
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: url(${BackgroundImage});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

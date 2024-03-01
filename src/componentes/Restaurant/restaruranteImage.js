@@ -7,7 +7,7 @@ const RestaurantImageContainer = styled.div`
   background-image: url(${(props) => props.imageUrl});
   background-size: cover;
   background-position: center;
-  margin-top: 20px; /* Ajuste conforme necessário */
+  margin-top: 20px;
 `;
 
 const RestaurantImage = ({ imageUrl }) => {
