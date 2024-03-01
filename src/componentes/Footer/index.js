@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../../images/logo2.png";
+import logo from "../../images/logo.png";
 import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 const FooterContainer = styled.footer`
   background: #ffebd9;
-  padding: 40px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,28 +13,48 @@ const FooterContainer = styled.footer`
 `;
 
 const Text = styled.span`
+  height: 24px;
+  left: 444px;
+  top: 2084px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
   color: #e66767;
-  font-weight: bold;
-  font-size: 17px;
-  margin-top: 29px;
+  margin-top: 65px;
+`;
+const SubText = styled.span`
+  color: #e66767;
+  height: 24px;
+  left: 444px;
+  top: 2084px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  margin-top: -6px;
 `;
 
 const Logo = styled.img`
-  width: 220px;
-  height: 70px;
+  width: 125px;
+  height: 57.5px;
 `;
 
 const SocialIcons = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100px;
-  margin-top: 14px;
+  margin-top: 19px;
 `;
 
 const Icon = styled.a`
   width: 25px;
   height: auto;
-  padding: 9px;
+  padding: 4px;
 `;
 
 const Footer = () => {
@@ -50,7 +70,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaGithub color={"black"} size={32} />
+            <FaGithub color=" #e66767" size={24} />
           </a>
         </Icon>
         <Icon>
@@ -59,7 +79,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaLinkedin color="#0e76a8" size={32} />
+            <FaLinkedin color="#e66767" size={24} />
           </a>
         </Icon>
         <Icon>
@@ -69,11 +89,16 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaYoutube color={"red"} size={32} />
+            <FaYoutube color="#e66767" size={24} />
           </a>
         </Icon>
       </SocialIcons>
-      <Text>Todos Direitos Reservados ao Desenvolvedor Nicolas Trevisan.</Text>
+      <Text>
+        A efood é uma plataforma para divulgação de estabelecimentos, a
+        responsabilidade pela entrega, qualidade
+      </Text>
+      <br />
+      <SubText>dos produtos é toda do estabelecimento contratado.</SubText>
     </FooterContainer>
   );
 };

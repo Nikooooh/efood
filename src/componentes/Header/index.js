@@ -1,43 +1,60 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../../images/logo2.png";
 import { Link } from "react-router-dom";
+import VectorBackground from "../../images/Vector.png";
+import logo from "../../images/logo.png";
 
 const HeaderContainer = styled.header`
-  padding: 100px;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(to bottom, #ffebcd, #ffac8c);
+  background-image: url(${VectorBackground});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const Logo = styled.img`
-  width: 200px;
-  height: auto;
+  width: 125px;
+  height: 57.5px;
+  margin-bottom: 120px;
 `;
 
-const Text = styled.span`
-  color: #dc143c;
-  font-weight: bold;
-  font-size: 29px;
-  margin-top: 50px;
+const TextContainer = styled.div`
+  text-align: center;
 `;
-const Text2 = styled.span`
-  color: #dc143c;
-  font-weight: bold;
-  font-size: 29px;
+
+const MainText = styled.span`
+  color: #e66767;
+  font-weight: 700;
+  font-size: 36px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  line-height: 42.19px;
+`;
+
+const SubText = styled.span`
+  color: #e66767;
+  font-size: 36px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 42.19px;
 `;
 
 const Header = () => {
   return (
     <HeaderContainer>
       <Link to={"/"}>
-        <Logo src={logo} alt="Logo" />{" "}
+        <Logo src={logo} alt="Logo" />
       </Link>
-      <Text>Viva experiências gastronômicas </Text>
-      <Text2>no conforto da sua casa</Text2>
+      <TextContainer>
+        <MainText>Viva experiências gastronômicas</MainText>
+        <br />
+        <SubText>no conforto da sua casa</SubText>
+      </TextContainer>
     </HeaderContainer>
   );
 };
