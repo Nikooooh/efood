@@ -19,7 +19,7 @@ const Logo = styled.img`
   height: 57.5px;
   margin-left: 103px;
   padding: 200px;
-  margin-left: 80px;
+  margin-left: 60px;
 `;
 
 const Title = styled.div`
