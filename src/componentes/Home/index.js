@@ -10,6 +10,7 @@ const MainSection = styled.section`
   background-color: #fff8f2;
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 105px;
 `;
 
 const MainContainer = styled.div`

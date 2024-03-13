@@ -6,13 +6,13 @@ const CardContainer = styled.div`
   position: relative;
   width: 472px;
   height: 405px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-top: 59px;
   padding: 0;
   border: 2px solid #e66767;
-  margin-right: 60px;
-  margin-left: 60px;
   background-color: #ffffff;
+  margin-left: 62px;
+  margin-right: 62px;
 `;
 
 const CardImage = styled.img`
@@ -52,14 +52,19 @@ const FoodType = styled.div`
   padding: 6px 8px;
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 700;
   border-radius: 0px;
 `;
 
 const Rating = styled.div`
-  color: #ff8c00;
   font-size: 19px;
   padding: 8px;
+  color: #e66767;
+`;
+
+const Star = styled.span`
+  color: #ff8c00;
 `;
 
 const Button = styled.button`
@@ -84,7 +89,9 @@ const Card = ({ image, restaurantName, description, foodType, rating, id }) => {
       <FoodType>{foodType}</FoodType>
       <RestaurantName>
         {restaurantName}
-        <Rating>{rating} ★</Rating>
+        <Rating>
+          {rating} <Star>★</Star>
+        </Rating>
       </RestaurantName>
       <Description>{description}</Description>
       <Link to={`/detalhes/${id}`}>

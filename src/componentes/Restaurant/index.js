@@ -9,15 +9,11 @@ const MenuItemCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
-  width: 23%;
+  width: 20%;
   background-color: #e66767;
   height: 428px;
   border: 10px solid #e66767;
   margin: 50px 19px;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
 `;
 
 const CardImage = styled.img`
@@ -112,6 +108,7 @@ const MenuContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   background-color: #fff8f2;
+  padding-bottom: 62px;
 `;
 
 const ImageContainer = styled.div`
@@ -125,6 +122,7 @@ const RestaurantDetailsPage = () => {
   const [restaurantImage, setRestaurantImage] = useState("");
   const [menuItems, setMenuItems] = useState([]);
   const [restaurantName, setRestaurantName] = useState("");
+  const [restaurantFoodType, setRestaurantFoodType] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -136,6 +134,7 @@ const RestaurantDetailsPage = () => {
         setMenuItems(data.cardapio);
         setRestaurantName(data.titulo);
         setRestaurantImage(data.capa);
+        setRestaurantFoodType(data.tipo);
       });
   }, [id]);
 
@@ -174,6 +173,7 @@ const RestaurantDetailsPage = () => {
         <RestaurantImage
           imageUrl={restaurantImage}
           restaurantName={restaurantName}
+          foodType={restaurantFoodType}
         />{" "}
       </ImageContainer>
       <MenuContainer>

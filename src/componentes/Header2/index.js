@@ -7,7 +7,6 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 186px;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   background-image: url(${BackgroundImage});
   background-repeat: no-repeat;
@@ -19,6 +18,8 @@ const Logo = styled.img`
   width: 125px;
   height: 57.5px;
   margin-left: 103px;
+  padding: 200px;
+  margin-left: 80px;
 `;
 
 const Title = styled.div`
@@ -26,7 +27,9 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 900;
   font-size: 18px;
+  padding: 200px;
   line-height: 21px;
+  margin-left: 163px;
   color: #e66767;
 `;
 
@@ -36,7 +39,9 @@ const CartInfo = styled.div`
   font-weight: 900;
   font-size: 18px;
   line-height: 21px;
+  padding: 200px;
   color: #e66767;
+  margin-left: 20px;
 `;
 
 const Header = () => {

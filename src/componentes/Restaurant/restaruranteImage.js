@@ -17,23 +17,39 @@ const Overlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
+  flex-direction: column; /* Alteração para orientação de coluna */
+  justify-content: center; /* Alinhar os itens verticalmente */
+  align-items: flex-start;
   padding: 20px;
   box-sizing: border-box;
 `;
-
 const RestaurantName = styled.h1`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 900;
   font-size: 32px;
-  color: #fff;
-  margin: 0;
-  margin-left: 247px;
+  line-height: 38px;
+  color: #ffffff;
+  margin-left: 345px;
+  padding-top: 160px;
 `;
 
-const RestaurantImage = ({ imageUrl, restaurantName }) => {
+const FoodType = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 32px;
+  line-height: 38px;
+  color: #ffffff;
+  margin-left: 345px;
+  opacity: 0.6;
+`;
+
+const RestaurantImage = ({ imageUrl, restaurantName, foodType }) => {
   return (
     <RestaurantImageContainer imageUrl={imageUrl}>
       <Overlay>
+        <FoodType>{foodType}</FoodType>
         <RestaurantName>{restaurantName}</RestaurantName>
       </Overlay>
     </RestaurantImageContainer>
