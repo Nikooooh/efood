@@ -30,7 +30,7 @@ const RestaurantName = styled.h1`
   font-size: 32px;
   line-height: 38px;
   color: #ffffff;
-  margin-left: 345px;
+  margin-left: 305px;
   padding-top: 160px;
 `;
 
@@ -41,7 +41,7 @@ const FoodType = styled.p`
   font-size: 32px;
   line-height: 38px;
   color: #ffffff;
-  margin-left: 345px;
+  margin-left: 305px;
   opacity: 0.6;
 `;
 
