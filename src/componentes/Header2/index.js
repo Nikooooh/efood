@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo2 from "../../images/logo.png";
 import BackgroundImage from "../../images/Vector.png";
+import Cart from "../Cart";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -43,14 +44,29 @@ const CartInfo = styled.div`
   color: #e66767;
   margin-left: 20px;
 `;
-
 const Header = () => {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  const toggleCart = () => {
+    setCartOpen(!cartOpen);
+  };
+
+  const closeCart = () => {
+    setCartOpen(false);
+  };
+
   return (
-    <HeaderContainer>
-      <Title>Restaurantes</Title>
-      <Logo src={Logo2} alt="Logo" />
-      <CartInfo>0 produto(s) no carrinho</CartInfo>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <Title>Restaurantes</Title>
+        <Logo src={Logo2} alt="Logo" />
+        <CartInfo onClick={toggleCart}>
+          {cartItems.length} produto(s) no carrinho
+        </CartInfo>
+      </HeaderContainer>
+      {cartOpen && <Cart items={cartItems} onClose={closeCart} />}
+    </>
   );
 };
 
