@@ -49,7 +49,9 @@ const RestaurantImage = ({ imageUrl, restaurantName, foodType }) => {
   return (
     <RestaurantImageContainer imageUrl={imageUrl}>
       <Overlay>
-        <FoodType>{foodType}</FoodType>
+        <FoodType>
+          {foodType.charAt(0).toUpperCase() + foodType.slice(1).toLowerCase()}
+        </FoodType>
         <RestaurantName>{restaurantName}</RestaurantName>
       </Overlay>
     </RestaurantImageContainer>
