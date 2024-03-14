@@ -18,9 +18,9 @@ const CartContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 16px;
   margin-bottom: 20px;
-  color: #333333;
+  color: #ffebd9;
   font-family: Arial, sans-serif;
 `;
 
@@ -111,8 +111,8 @@ const Form = styled.form`
 const Input = styled.input`
   margin-bottom: 10px;
   padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  background-color: #ffebd9;
+  border: 1px solid #ffebd9;
 `;
 
 const ButtonContainer = styled.div`
@@ -314,8 +314,8 @@ const Cart = ({ items, onClose, removeFromCart }) => {
       <Title>
         {showDeliveryForm || showPaymentForm
           ? showPaymentForm
-            ? "Informações de Pagamento"
-            : "Informações de Entrega"
+            ? "Pagamento"
+            : "Entrega"
           : ""}
       </Title>
       {showPaymentForm ? (

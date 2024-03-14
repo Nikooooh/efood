@@ -6,19 +6,17 @@ import Header2 from "../Header2";
 import RestaurantImage from "./restaruranteImage";
 
 const MenuItemCard = styled.div`
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease;
-  width: 20%;
+  width: 320px;
   background-color: #e66767;
-  height: 428px;
+  height: 378px;
   border: 10px solid #e66767;
   margin: 50px 19px;
 `;
 
 const CardImage = styled.img`
-  width: 100%;
-  height: 250px;
+  width: 316px;
+  height: 167px;
   object-fit: cover;
 `;
 const CardImageModal = styled.img`
@@ -31,12 +29,14 @@ const CardImageModal = styled.img`
 
 const CardContent = styled.div`
   padding: 16px;
+  height: 200px;
+  position: relative;
 `;
 
 const ItemTitle = styled.h3`
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 8px;
-  color: white;
+  color: #ffebd9;
   margin-top: -14px;
   margin-left: -14px;
 `;
@@ -50,9 +50,9 @@ const ItemTitleModal = styled.h3`
 `;
 
 const ItemDescription = styled.p`
-  font-size: 13.5px;
+  font-size: 14px;
   margin-bottom: 16px;
-  color: white;
+  color: #ffebd9;
   margin-left: -14px;
 `;
 const ItemDescriptionModal = styled.p`
@@ -70,18 +70,19 @@ const ItemPriceModal = styled.p`
 `;
 
 const AddToCartButton = styled.button`
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #ffebd9;
   color: #e66767;
   font-weight: 700;
+  width: 312px;
+  height: 24px;
   font-size: 14px;
-  width: 109%;
   font-family: "Roboto", sans-serif;
-  font-style: normal;
-  margin-left: -15px;
-  margin-top: -20px;
-  line-height: 16.41px;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 16px;
   cursor: pointer;
 `;
 

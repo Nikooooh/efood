@@ -20,7 +20,7 @@ const Logo = styled.img`
   height: 57.5px;
   margin-left: 103px;
   padding: 200px;
-  margin-left: 40px;
+  margin-left: -65px;
 `;
 
 const Title = styled.div`
@@ -30,7 +30,7 @@ const Title = styled.div`
   font-size: 18px;
   padding: 200px;
   line-height: 21px;
-  margin-left: 123px;
+  margin-left: 328px;
   color: #e66767;
 `;
 
@@ -42,7 +42,7 @@ const CartInfo = styled.div`
   line-height: 21px;
   padding: 200px;
   color: #e66767;
-  margin-left: 20px;
+  margin-left: -131px;
 `;
 const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
