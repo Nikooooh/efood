@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 
 const CartContainer = styled.div`
   position: fixed;
@@ -57,6 +56,20 @@ const ItemPrice = styled.p`
   font-family: "Roboto", sans-serif;
 `;
 
+const Message = styled.p`
+  font-size: 14px;
+  color: #ffebd9;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+`;
+
+const MessageTitle = styled.p`
+  font-size: 16px;
+  color: #ffebd9;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+`;
+
 const ItemImage = styled.img`
   width: 80px;
   height: 80px;
@@ -72,12 +85,12 @@ const Total = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 12px;
+  right: 9px;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   color: white;
 `;
 
@@ -92,14 +105,14 @@ const ContinueButton = styled.button`
   background-color: #ffebd9;
   color: #e66767;
   border: none;
-  padding: 8px 16px;
+  height: 24px;
+  padding: 4px 16px;
   cursor: pointer;
-  margin-top: 20px;
-  width: 105%;
+  margin-top: 10px;
+  width: 100%;
   font-weight: 700;
-  margin-left: -7px;
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const Form = styled.form`
@@ -115,11 +128,72 @@ const Input = styled.input`
   border: 1px solid #ffebd9;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+const InputCepContainer = styled.div`
+  flex: 1;
+  margin-right: 20px;
 `;
 
+const InputContainer = styled.div`
+  display: flex;
+`;
+
+const CardInputContainer = styled.div`
+  flex: 1;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const CardNumberInput = styled.input`
+  flex: 1;
+  padding: 8px;
+  background-color: #ffebd9;
+  border: 1px solid #ffebd9;
+  margin-right: 19px;
+`;
+
+const CVVInput = styled.input`
+  width: 74px;
+  padding: 8px;
+  background-color: #ffebd9;
+  border: 1px solid #ffebd9;
+`;
+
+const InputComplementoContainer = styled.div`
+  flex: 1;
+`;
+
+const InputCep = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 85%;
+  background-color: #ffebd9;
+  border: 1px solid #ffebd9;
+`;
+
+const InputComplemento = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 85%;
+  background-color: #ffebd9;
+  border: 1px solid #ffebd9;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 24px;
+`;
+const SobInputs = styled.div`
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  color: #ffebd9;
+  weight: 700;
+  margin-bottom: 9px;
+  margin-left: 0px;
+  line-height: 16.41px;
+`;
 const ErrorMessage = styled.span`
   color: red;
   font-size: 12px;
@@ -127,9 +201,10 @@ const ErrorMessage = styled.span`
 `;
 
 const Cart = ({ items, onClose, removeFromCart }) => {
-  const navigate = useNavigate();
   const totalPrice = items.reduce((total, item) => total + item.preco, 0);
   const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+  const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
+  const [orderId, setOrderId] = useState("");
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [formData, setFormData] = useState({
     nome: "",
@@ -202,9 +277,7 @@ const Cart = ({ items, onClose, removeFromCart }) => {
 
   const handleSubmitPayment = (e) => {
     e.preventDefault();
-    if (validatePaymentForm()) {
-      handleFinishOrder();
-    }
+    handleFinishOrder();
   };
 
   const validateDeliveryForm = () => {
@@ -229,26 +302,6 @@ const Cart = ({ items, onClose, removeFromCart }) => {
       errors.numero = "O número deve conter apenas dígitos";
     }
     setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const validatePaymentForm = () => {
-    let errors = {};
-    const cardNameRegex = /^[a-zA-Z\s]*$/;
-
-    if (!cardData.cardNumber) {
-      errors.cardNumber = "O número do cartão é obrigatório";
-    }
-    if (!cardData.cardName.match(cardNameRegex)) {
-      errors.cardName = "O nome no cartão não pode conter números";
-    }
-    if (!cardData.expirationDate) {
-      errors.expirationDate = "A data de validade é obrigatória";
-    }
-    if (!cardData.cvv) {
-      errors.cvv = "O CVV é obrigatório";
-    }
-    setCardFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
@@ -301,7 +354,8 @@ const Cart = ({ items, onClose, removeFromCart }) => {
         return response.json();
       })
       .then((data) => {
-        navigate("/confirmacao", { state: { orderId: data.orderId } });
+        console.log("Dados recebidos da API de checkout:", data);
+        setOrderId(data.orderId);
       })
       .catch((error) => {
         console.error("Erro ao concluir o pedido:", error);
@@ -311,141 +365,224 @@ const Cart = ({ items, onClose, removeFromCart }) => {
   return (
     <CartContainer>
       <CloseButton onClick={onClose}>X</CloseButton>
-      <Title>
-        {showDeliveryForm || showPaymentForm
-          ? showPaymentForm
-            ? "Pagamento"
-            : "Entrega"
-          : ""}
-      </Title>
-      {showPaymentForm ? (
-        <Form onSubmit={handleSubmitPayment}>
-          <Input
-            type="text"
-            name="cardNumber"
-            placeholder="Número do Cartão"
-            value={cardData.cardNumber}
-            onChange={handleCardInputChange}
-          />
-          {cardFormErrors.cardNumber && (
-            <ErrorMessage>{cardFormErrors.cardNumber}</ErrorMessage>
-          )}
-          <Input
-            type="text"
-            name="cardName"
-            placeholder="Nome no Cartão"
-            value={cardData.cardName}
-            onChange={handleCardInputChange}
-          />
-          {cardFormErrors.cardName && (
-            <ErrorMessage>{cardFormErrors.cardName}</ErrorMessage>
-          )}
-          <Input
-            type="text"
-            name="expirationDate"
-            placeholder="Data de Validade (MM/AA)"
-            value={cardData.expirationDate}
-            onChange={handleCardInputChange}
-          />
-          {cardFormErrors.expirationDate && (
-            <ErrorMessage>{cardFormErrors.expirationDate}</ErrorMessage>
-          )}
-          <Input
-            type="text"
-            name="cvv"
-            placeholder="CVV"
-            value={cardData.cvv}
-            onChange={handleCardInputChange}
-          />
-          {cardFormErrors.cvv && (
-            <ErrorMessage>{cardFormErrors.cvv}</ErrorMessage>
-          )}
-          <ButtonContainer>
-            <ContinueButton onClick={handleContinueToDelivery}>
-              Voltar para as informações de entrega
-            </ContinueButton>
-            <ContinueButton type="submit">Concluir Pedido</ContinueButton>
-          </ButtonContainer>
-        </Form>
-      ) : showDeliveryForm ? (
-        <Form onSubmit={handleSubmitDelivery}>
-          <Input
-            type="text"
-            name="nome"
-            placeholder="Nome"
-            value={formData.nome}
-            onChange={handleInputChange}
-          />
-          {formErrors.nome && <ErrorMessage>{formErrors.nome}</ErrorMessage>}
-          <Input
-            type="text"
-            name="endereco"
-            placeholder="Endereço"
-            value={formData.endereco}
-            onChange={handleInputChange}
-          />
-          {formErrors.endereco && (
-            <ErrorMessage>{formErrors.endereco}</ErrorMessage>
-          )}
-          <Input
-            type="text"
-            name="cidade"
-            placeholder="Cidade"
-            value={formData.cidade}
-            onChange={handleInputChange}
-          />
-          {formErrors.cidade && (
-            <ErrorMessage>{formErrors.cidade}</ErrorMessage>
-          )}
-          <Input
-            type="text"
-            name="cep"
-            placeholder="CEP"
-            value={formData.cep}
-            onChange={handleInputChange}
-          />
-          {formErrors.cep && <ErrorMessage>{formErrors.cep}</ErrorMessage>}
-          <Input
-            type="text"
-            name="numero"
-            placeholder="Número"
-            value={formData.numero}
-            onChange={handleInputChange}
-          />
-          {formErrors.numero && (
-            <ErrorMessage>{formErrors.numero}</ErrorMessage>
-          )}
-          <ButtonContainer>
-            <ContinueButton onClick={handleBackToCart}>
-              Voltar para o carrinho
-            </ContinueButton>
-            <ContinueButton type="submit">
-              Continuar com o pagamento
-            </ContinueButton>
-          </ButtonContainer>
-        </Form>
+      {orderId ? (
+        <div>
+          <MessageTitle>Pedido realizado - {orderId}</MessageTitle>
+          <Message>
+            Estamos felizes em informar que seu pedido já está em processo de
+            preparação e, em breve, será entregue no endereço fornecido.
+            <br />
+            <br />
+            Gostaríamos de ressaltar que nossos entregadores não estão
+            autorizados a realizar cobranças extras.
+            <br />
+            <br />
+            Lembre-se da importância de higienizar as mãos após o recebimento do
+            pedido, garantindo assim sua segurança e bem-estar durante a
+            refeição.
+            <br />
+            <br />
+            Esperamos que desfrute de uma deliciosa e agradável experiência
+            gastronômica. Bom apetite!
+          </Message>
+          <ContinueButton onClick={onClose}>Concluir</ContinueButton>
+        </div>
       ) : (
         <>
-          {items.map((item, index) => (
-            <ItemContainer key={index}>
-              <Item>
-                <ItemImage src={item.foto} alt={item.nome} />
-                <ItemDetails>
-                  <ItemName>{item.nome}</ItemName>
-                  <ItemPrice>R$ {item.preco.toFixed(2)}</ItemPrice>
-                </ItemDetails>
-                <RemoveItemButton onClick={() => removeFromCart(index)}>
-                  <FaTrash color="#ff5733" />
-                </RemoveItemButton>
-              </Item>
-            </ItemContainer>
-          ))}
-          <Total>
-            Valor Total: R$ {totalPrice.toFixed(2)}
-            <ContinueButton onClick={handleContinueToDelivery}>
-              Continuar com a entrega
-            </ContinueButton>
-          </Total>
+          <Title>
+            {showDeliveryForm || showPaymentForm
+              ? showPaymentForm
+                ? `Pagamento - valor a pagar R$${totalPrice.toFixed(2)}`
+                : "Entrega"
+              : ""}
+          </Title>
+          {showPaymentForm ? (
+            <Form onSubmit={handleSubmitPayment}>
+              <SobInputs> Nome no cartão </SobInputs>
+              <Input
+                type="text"
+                name="cardName"
+                placeholder=""
+                value={cardData.cardName}
+                onChange={handleCardInputChange}
+              />
+              {cardFormErrors.cardNumber && (
+                <ErrorMessage>{cardFormErrors.cardNumber}</ErrorMessage>
+              )}
+              <InputContainer>
+                <CardInputContainer>
+                  <SobInputs> Número do cartão </SobInputs>
+                  <CardNumberInput
+                    type="text"
+                    name="cardNumber"
+                    placeholder=""
+                    value={cardData.cardNumber}
+                    onChange={handleCardInputChange}
+                  />
+                  {cardFormErrors.cardNumber && (
+                    <ErrorMessage>{cardFormErrors.cardNumber}</ErrorMessage>
+                  )}
+                </CardInputContainer>
+
+                <CardInputContainer>
+                  <SobInputs> CVV </SobInputs>
+                  <CVVInput
+                    type="text"
+                    name="cvv"
+                    placeholder=""
+                    value={cardData.cvv}
+                    onChange={handleCardInputChange}
+                  />
+                  {cardFormErrors.cvv && (
+                    <ErrorMessage>{cardFormErrors.cvv}</ErrorMessage>
+                  )}
+                </CardInputContainer>
+              </InputContainer>
+              <InputContainer>
+                <InputCepContainer>
+                  <SobInputs> Mês de vencimento </SobInputs>
+                  <InputComplemento
+                    type="text"
+                    name="mes-vencimento"
+                    placeholder=""
+                    value={cardData.mes}
+                    onChange={handleCardInputChange}
+                  />
+                  {cardFormErrors.mes && (
+                    <ErrorMessage>{cardFormErrors.mes}</ErrorMessage>
+                  )}
+                </InputCepContainer>
+                <InputComplementoContainer>
+                  <SobInputs> Ano de vencimento</SobInputs>
+                  <InputCep
+                    type="text"
+                    name="ano-vencimento"
+                    placeholder=""
+                    value={cardData.ano}
+                    onChange={handleCardInputChange}
+                  />
+                  {cardFormErrors.ano && (
+                    <ErrorMessage>{cardFormErrors.ano}</ErrorMessage>
+                  )}
+                </InputComplementoContainer>
+              </InputContainer>
+              <ButtonContainer>
+                <ContinueButton type="submit" onClick={handleSubmitPayment}>
+                  Finalizar pagamento
+                </ContinueButton>
+
+                <ContinueButton onClick={handleContinueToDelivery}>
+                  Voltar para a edição de endereço
+                </ContinueButton>
+              </ButtonContainer>
+            </Form>
+          ) : showDeliveryForm ? (
+            <Form onSubmit={handleSubmitDelivery}>
+              <SobInputs> Quem irá receber </SobInputs>
+              <Input
+                type="text"
+                name="nome"
+                placeholder=""
+                value={formData.nome}
+                onChange={handleInputChange}
+              />
+              {formErrors.nome && (
+                <ErrorMessage>{formErrors.nome}</ErrorMessage>
+              )}
+              <SobInputs> Endereço </SobInputs>
+              <Input
+                type="text"
+                name="endereco"
+                placeholder=""
+                value={formData.endereco}
+                onChange={handleInputChange}
+              />
+              {formErrors.endereco && (
+                <ErrorMessage>{formErrors.endereco}</ErrorMessage>
+              )}
+              <SobInputs> Cidade </SobInputs>
+              <Input
+                type="text"
+                name="cidade"
+                placeholder=""
+                value={formData.cidade}
+                onChange={handleInputChange}
+              />
+              {formErrors.cidade && (
+                <ErrorMessage>{formErrors.cidade}</ErrorMessage>
+              )}
+              <InputContainer>
+                <InputCepContainer>
+                  <SobInputs> CEP </SobInputs>
+                  <InputCep
+                    type="text"
+                    name="cep"
+                    placeholder=""
+                    value={formData.cep}
+                    onChange={handleInputChange}
+                  />
+                  {formErrors.cep && (
+                    <ErrorMessage>{formErrors.cep}</ErrorMessage>
+                  )}
+                </InputCepContainer>
+                <InputComplementoContainer>
+                  <SobInputs> Número </SobInputs>
+                  <InputComplemento
+                    type="text"
+                    name="numero"
+                    placeholder=""
+                    value={formData.numero}
+                    onChange={handleInputChange}
+                  />
+                  {formErrors.numero && (
+                    <ErrorMessage>{formErrors.numero}</ErrorMessage>
+                  )}
+                </InputComplementoContainer>
+              </InputContainer>
+              <SobInputs> Complemento (opcional) </SobInputs>
+              <Input
+                type="text"
+                name="complemento"
+                placeholder=""
+                value={formData.complemento}
+                onChange={handleInputChange}
+              />
+              {formErrors.numero && (
+                <ErrorMessage>{formErrors.complemento}</ErrorMessage>
+              )}
+              <ButtonContainer>
+                <ContinueButton onClick={handleBackToCart}>
+                  Voltar para o carrinho
+                </ContinueButton>
+                <ContinueButton type="submit">
+                  Continuar com o pagamento
+                </ContinueButton>
+              </ButtonContainer>
+            </Form>
+          ) : (
+            <>
+              {items.map((item, index) => (
+                <ItemContainer key={index}>
+                  <Item>
+                    <ItemImage src={item.foto} alt={item.nome} />
+                    <ItemDetails>
+                      <ItemName>{item.nome}</ItemName>
+                      <ItemPrice>R$ {item.preco.toFixed(2)}</ItemPrice>
+                    </ItemDetails>
+                    <RemoveItemButton onClick={() => removeFromCart(index)}>
+                      <FaTrash color="#ff5733" />
+                    </RemoveItemButton>
+                  </Item>
+                </ItemContainer>
+              ))}
+              <Total>
+                Valor Total: R$ {totalPrice.toFixed(2)}
+                <ContinueButton onClick={handleContinueToDelivery}>
+                  Continuar com a entrega
+                </ContinueButton>
+              </Total>
+            </>
+          )}
         </>
       )}
     </CartContainer>
