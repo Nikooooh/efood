@@ -9,7 +9,7 @@ const CartContainer = styled.div`
   right: 0;
   width: 300px;
   height: 100%;
-  background-color: #f9f9f9;
+  background-color: #e66767;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   padding: 20px;
   z-index: 999;
@@ -25,9 +25,11 @@ const Title = styled.h2`
 `;
 
 const ItemContainer = styled.div`
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: #ffebd9;
   padding: 12px;
+  width: 289px;
+  margin-left: -5px;
+  height: 100px;
   margin-bottom: 12px;
 `;
 
@@ -44,27 +46,27 @@ const ItemDetails = styled.div`
 
 const ItemName = styled.p`
   font-weight: bold;
-  color: #333333;
+  color: #e66767;
   font-family: "Roboto", sans-serif;
 `;
 
 const ItemPrice = styled.p`
   font-size: 14px;
-  color: #666666;
+  color: #e66767;
+  font-weight: 400;
   font-family: "Roboto", sans-serif;
 `;
 
 const ItemImage = styled.img`
   width: 80px;
   height: 80px;
-  border-radius: 8px;
   margin-right: 12px;
 `;
 
 const Total = styled.div`
   margin-top: 20px;
   font-weight: bold;
-  color: #333333;
+  color: #ffebd9;
   font-family: Arial, sans-serif;
 `;
 
@@ -76,7 +78,7 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 20px;
-  color: #666666;
+  color: white;
 `;
 
 const RemoveItemButton = styled.button`
@@ -87,20 +89,17 @@ const RemoveItemButton = styled.button`
 `;
 
 const ContinueButton = styled.button`
-  background-color: #ff5733;
-  color: #ffffff;
+  background-color: #ffebd9;
+  color: #e66767;
   border: none;
-  border-radius: 4px;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;
-  margin-right: 9px;
+  width: 105%;
+  font-weight: 700;
+  margin-left: -7px;
   font-family: Arial, sans-serif;
   font-size: 16px;
-
-  &:hover {
-    background-color: #ff714d;
-  }
 `;
 
 const Form = styled.form`
@@ -317,7 +316,7 @@ const Cart = ({ items, onClose, removeFromCart }) => {
           ? showPaymentForm
             ? "Informações de Pagamento"
             : "Informações de Entrega"
-          : "Carrinho de Compras"}
+          : ""}
       </Title>
       {showPaymentForm ? (
         <Form onSubmit={handleSubmitPayment}>
@@ -433,7 +432,7 @@ const Cart = ({ items, onClose, removeFromCart }) => {
                 <ItemImage src={item.foto} alt={item.nome} />
                 <ItemDetails>
                   <ItemName>{item.nome}</ItemName>
-                  <ItemPrice>Preço: R$ {item.preco.toFixed(2)}</ItemPrice>
+                  <ItemPrice>R$ {item.preco.toFixed(2)}</ItemPrice>
                 </ItemDetails>
                 <RemoveItemButton onClick={() => removeFromCart(index)}>
                   <FaTrash color="#ff5733" />
@@ -442,7 +441,7 @@ const Cart = ({ items, onClose, removeFromCart }) => {
             </ItemContainer>
           ))}
           <Total>
-            Total: R$ {totalPrice.toFixed(2)}
+            Valor Total: R$ {totalPrice.toFixed(2)}
             <ContinueButton onClick={handleContinueToDelivery}>
               Continuar com a entrega
             </ContinueButton>
