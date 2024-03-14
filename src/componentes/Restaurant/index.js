@@ -62,12 +62,6 @@ const ItemDescriptionModal = styled.p`
   margin-left: 14px;
 `;
 
-const ItemPrice = styled.p`
-  font-size: 16px;
-  color: white;
-  margin-bottom: 16px;
-`;
-
 const ItemPriceModal = styled.p`
   font-size: 16px;
   color: white;
@@ -136,14 +130,6 @@ const AddToCartButtonModal = styled.button`
   cursor: pointer;
 `;
 
-const RestaurantName = styled.h1`
-  font-size: 32px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: #ff5733;
-`;
-
 const MenuContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -184,10 +170,6 @@ const RestaurantDetailsPage = () => {
         setRestaurantFoodType(data.tipo);
       });
   }, [id]);
-
-  const openCart = () => {
-    setCartOpen(true);
-  };
 
   const closeCart = () => {
     setCartOpen(false);
