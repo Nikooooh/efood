@@ -7,11 +7,13 @@ import RestaurantImage from "./restaruranteImage";
 
 const MenuItemCard = styled.div`
   overflow: hidden;
+  width: calc(33.33% - 40px);
   width: 320px;
   background-color: #e66767;
   height: 378px;
   border: 10px solid #e66767;
-  margin: 50px 19px;
+  margin-bottom: -40px;
+  margin-top: 70px;
 `;
 
 const CardImage = styled.img`
@@ -130,13 +132,15 @@ const AddToCartButtonModal = styled.button`
   padding: 8px 16px;
   cursor: pointer;
 `;
-
 const MenuContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #fff8f2;
   padding-bottom: 62px;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-bottom: 150px;
 `;
 
 const ImageContainer = styled.div`
