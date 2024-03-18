@@ -14,7 +14,7 @@ const MenuItemCard = styled.div`
   border: 10px solid #e66767;
   margin-bottom: -40px;
   margin-top: 70px;
-  margin-right: 0px;
+  margin-right: 50px;
 `;
 
 const CardImage = styled.img`
