@@ -37,7 +37,7 @@ const Title = styled.div`
   font-size: 18px;
   line-height: 21px;
   color: #e66767;
-  margin-left: 102px;
+
   margin-top: 20px;
 
   @media (min-width: 768px) {
@@ -51,7 +51,7 @@ const CartInfo = styled.div`
   font-size: 18px;
   line-height: 21px;
   color: #e66767;
-  margin-right: 142px;
+
   margin-top: 10px;
   cursor: pointer;
 
