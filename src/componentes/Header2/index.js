@@ -5,45 +5,61 @@ import BackgroundImage from "../../images/Vector.png";
 import Cart from "../Cart";
 
 const HeaderContainer = styled.div`
-  width: 100%;
   height: 186px;
-  display: flex;
-  align-items: center;
   background-image: url(${BackgroundImage});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 20px 40px;
+  }
 `;
 
 const Logo = styled.img`
   width: 125px;
-  height: 57.5px;
-  margin-left: 103px;
-  padding: 200px;
-  margin-left: -30px;
+  height: auto;
+  margin-left: 370px;
+
+  @media (min-width: 768px) {
+    margin-left: 0;
+  }
 `;
 
 const Title = styled.div`
   font-family: "Roboto", sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
-  padding: 200px;
   line-height: 21px;
-  margin-left: 164px;
   color: #e66767;
+  margin-left: 102px;
+  margin-top: 20px;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
 const CartInfo = styled.div`
   font-family: "Roboto", sans-serif;
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
   line-height: 21px;
-  padding: 200px;
   color: #e66767;
-  margin-left: -69px;
+  margin-right: 142px;
+  margin-top: 10px;
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 `;
+
 const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
